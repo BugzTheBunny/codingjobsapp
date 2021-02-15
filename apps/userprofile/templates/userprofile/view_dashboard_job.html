@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h1 class="title">View Job - {{job.title}}</h1>
+
+<p class="is-size-4">{{job.short_description}}</p>
+
+<p class="is-size-4">{{job.long_description}}</p>
+<hr>
+<h2 class="subtitle">More Info</h2>
+<b>Company Name: </b>{{job.company_name}}<br>
+{% if company_address %}<b>Company Address: </b>{{job.company_address}}<br>{% endif %}
+{% if company_place %}<b>Company Place: </b>{{job.company_place}}<br>{% endif %}
+{% if company_country %}<b>Company Country: </b>{{job.company_country}}<br>{% endif %}
+{% if company_size %}<b>Company Size: </b>{{job.get_company_size_display}}<br>{% endif %}
+
+
+<hr>
+
+{% for application in job.applications.all %}
+<div class="application">
+    <a href="{% url 'view_application' application.id %}"
+       class="button is-warning">{{application.created_by.username}}</a>
+</div>
+{% empty %}
+<p>No applications for jobs yet...</p>
+{% endfor %}
+{% endblock %}
